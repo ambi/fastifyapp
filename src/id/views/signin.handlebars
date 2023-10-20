@@ -1,0 +1,42 @@
+<div class="columns is-mobile is-centered mt-6">
+  <div class="column is-half">
+    <div class="card">
+      <header class="card-header">
+        <p class="title m-4">Sign in</p>
+      </header>
+      <div class="card-content">
+        <form action="/signin" method="post">
+          <div class="field">
+            <label for="username" class="label">Username</label>
+            <div class="control">
+              <input type="text" id="username" class="input" name="username" autocomplete="username" required autofocus>
+            </div>
+          </div>
+          <div class="field">
+            <label for="current-password" class="label">Password</label>
+            <div class="control">
+              <input type="password" id="current-password" class="input" name="password" autocomplete="current-password"
+                required>
+            </div>
+          </div>
+
+          <input type="hidden" id="signin-csrf" name="_csrf" value="{{csrfToken}}">
+
+          <div class="field">
+            <div class="control">
+              <button type="submit" class="button is-link">
+                Next
+              </button>
+            </div>
+          </div>
+        </form>
+
+        {{#each errorMessages}}
+        <div class="notification is-danger is-light mt-4">
+          {{this}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
