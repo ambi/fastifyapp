@@ -1,6 +1,7 @@
 import supertest from 'supertest';
 import setCookie from 'set-cookie-parser';
 import * as cheerio from 'cheerio';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { createApp, defaultConfig } from '../../src/app/app.js';
 import { User } from '../../src/id/models/user.js';
