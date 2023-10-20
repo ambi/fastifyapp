@@ -1,6 +1,6 @@
 import { User } from '../id/models/user.js';
-import { UserRepo } from '../id/services/user.repo.js';
 import { PasswordService } from '../id/services/password.service.js';
+import { UserRepo } from '../id/services/user.repo.js';
 
 export async function createTestData(users: UserRepo) {
   const pwdSvc = new PasswordService();

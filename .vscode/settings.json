@@ -1,9 +1,19 @@
 {
-  "deno.enable": false,
-  "deno.lint": true,
-  "deno.config": "./deno.jsonc",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "quickFix.biome": true,
+    "source.organizeImports.biome": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "[typescript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
   }
 }

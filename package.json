@@ -5,6 +5,9 @@
   "type": "module",
   "main": "dist/app/main.js",
   "scripts": {
+    "lint": "biome check .",
+    "fmt": "biome format . --write && biome check . --apply",
+    "fmt:unsafe": "biome format . --write && biome check . --apply-unsafe",
     "start": "tsc && node dist/app/main.js",
     "test": "vitest run"
   },
@@ -12,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@biomejs/biome": "^1.3.1",
     "@types/node": "^20.8.7",
     "@types/set-cookie-parser": "^2.4.5",
     "@types/supertest": "^2.0.14",

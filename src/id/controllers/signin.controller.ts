@@ -2,8 +2,8 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
 
 import { Config } from '../../config/config.js';
-import { SigninParams, SigninService } from '../services/signin.service.js';
 import { AuthenticationResult } from '../models/session.js';
+import { SigninParams, SigninService } from '../services/signin.service.js';
 import { getSession, resetSession, saveSession } from './session.js';
 import { signinSchema } from './signin.schema.js';
 
@@ -19,11 +19,7 @@ declare module 'fastify' {
 export const DEFAULT_POST_SIGNIN = '/home';
 
 export class SigninController {
-  constructor(
-    private cfg: Config,
-    private signinSvc: SigninService,
-  ) {
-  }
+  constructor(private cfg: Config, private signinSvc: SigninService) {}
 
   async signinPage(req: FastifyRequest, res: FastifyReply) {
     return res.status(200).view('src/id/views/signin', {

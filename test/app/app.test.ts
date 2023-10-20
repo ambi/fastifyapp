@@ -1,12 +1,12 @@
-import supertest from 'supertest';
-import setCookie from 'set-cookie-parser';
 import * as cheerio from 'cheerio';
+import setCookie from 'set-cookie-parser';
+import supertest from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { createApp, defaultConfig } from '../../src/app/app.js';
+import { createTestData } from '../../src/app/test-data.js';
 import { User } from '../../src/id/models/user.js';
 import { Users } from '../../src/id/repositories/users.js';
-import { createTestData } from '../../src/app/test-data.js';
 
 const cfg = defaultConfig;
 const users = new Users();
@@ -44,7 +44,7 @@ describe('GET /home', () => {
 
     const res = await agent.get('/home');
     expect(res.status).toBe(302);
-    expect(res.headers['location']).toEqual('/signin');
+    expect(res.headers.location).toEqual('/signin');
   });
 
   it('returns the home page (authenticated)', async () => {
@@ -52,7 +52,7 @@ describe('GET /home', () => {
 
     let res = await agent.get('/home');
     expect(res.status).toBe(302);
-    let location = res.headers['location'];
+    let location = res.headers.location;
     expect(location).toEqual('/signin');
     let sCookies = setCookie(res.headers['set-cookie']);
     let cookies = sCookies.map((c) => `${c.name}=${c.value}`).join('; ');
@@ -62,12 +62,14 @@ describe('GET /home', () => {
     const dollar = cheerio.load(res.text);
     const csrfToken = dollar('#signin-csrf').attr('value');
 
-    res = await agent.post(location).set('cookie', cookies)
+    res = await agent
+      .post(location)
+      .set('cookie', cookies)
       .send(`username=${testData.users[0].userName}`)
       .send(`password=${testData.userPasswords[0]}`)
       .send(`_csrf=${csrfToken}`);
     expect(res.status).toBe(302);
-    location = res.headers['location'];
+    location = res.headers.location;
     expect(location).toEqual('/home');
     sCookies = setCookie(res.headers['set-cookie']);
     cookies = sCookies.map((c) => `${c.name}=${c.value}`).join('; ');

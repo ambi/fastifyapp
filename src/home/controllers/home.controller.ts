@@ -5,8 +5,7 @@ import { getSession, saveSession } from '../../id/controllers/session.js';
 import { HomeService } from '../services/home.service.js';
 
 export class HomeController {
-  constructor(private cfg: Config, private homeSvc: HomeService) {
-  }
+  constructor(private cfg: Config, private homeSvc: HomeService) {}
 
   async home(req: FastifyRequest, res: FastifyReply) {
     const session = getSession(req);

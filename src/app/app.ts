@@ -1,21 +1,21 @@
-import Fastify, { FastifyBaseLogger } from 'fastify';
 import cookie from '@fastify/cookie';
 import csrfProtection from '@fastify/csrf-protection';
 import flash from '@fastify/flash';
 import formbody from '@fastify/formbody';
 import session from '@fastify/session';
 import view from '@fastify/view';
+import Fastify, { FastifyBaseLogger } from 'fastify';
 import handlebars from 'handlebars';
 import { FromSchema } from 'json-schema-to-ts';
 
 import { Config } from '../config/config.js';
-import { PasswordService } from '../id/services/password.service.js';
-import { UserRepo } from '../id/services/user.repo.js';
-import { SigninService } from '../id/services/signin.service.js';
+import { HomeController } from '../home/controllers/home.controller.js';
 import { HomeService } from '../home/services/home.service.js';
 import { SigninController } from '../id/controllers/signin.controller.js';
-import { HomeController } from '../home/controllers/home.controller.js';
 import { signinSchema } from '../id/controllers/signin.schema.js';
+import { PasswordService } from '../id/services/password.service.js';
+import { SigninService } from '../id/services/signin.service.js';
+import { UserRepo } from '../id/services/user.repo.js';
 
 export const defaultConfig: Config = {
   port: 8080,
@@ -67,10 +67,14 @@ export async function createApp(logger: FastifyBaseLogger | boolean, cfg: Config
 
   app.get(cfg.homePath, homeCtr.home.bind(homeCtr));
   app.get(cfg.signinPath, signinCtr.signinPage.bind(signinCtr));
-  app.post<{ Body: FromSchema<typeof signinSchema> }>(cfg.signinPath, {
-    preHandler: app.csrfProtection,
-    schema: { body: signinSchema },
-  }, signinCtr.signin.bind(signinCtr));
+  app.post<{ Body: FromSchema<typeof signinSchema> }>(
+    cfg.signinPath,
+    {
+      preHandler: app.csrfProtection,
+      schema: { body: signinSchema },
+    },
+    signinCtr.signin.bind(signinCtr),
+  );
 
   app.setNotFoundHandler((req, res) => {
     const { url, method } = req.raw;
