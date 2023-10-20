@@ -9,13 +9,14 @@ import { createTestData } from '../../src/app/test-data.js';
 
 const cfg = defaultConfig;
 const users = new Users();
-const app = createApp(cfg, users);
+let app: Awaited<ReturnType<typeof createApp>>;
 let testData: {
   users: User[];
   userPasswords: string[];
 };
 
 beforeAll(async () => {
+  app = await createApp(false, cfg, users);
   testData = await createTestData(users);
 
   await app.ready();

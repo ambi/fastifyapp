@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+import Fastify, { FastifyBaseLogger } from 'fastify';
 import cookie from '@fastify/cookie';
 import csrfProtection from '@fastify/csrf-protection';
 import flash from '@fastify/flash';
@@ -25,16 +25,8 @@ export const defaultConfig: Config = {
   signinPath: '/signin',
 };
 
-export async function createApp(cfg: Config, users: UserRepo) {
-  const app = Fastify({
-    logger: {
-      formatters: {
-        level: (label) => {
-          return { level: label.toUpperCase() };
-        },
-      },
-    },
-  });
+export async function createApp(logger: FastifyBaseLogger | boolean, cfg: Config, users: UserRepo) {
+  const app = Fastify({ logger });
 
   // Use formbody plugin.
   app.register(formbody);

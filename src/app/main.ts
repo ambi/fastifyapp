@@ -5,7 +5,7 @@ import { createTestData } from './test-data.js';
 async function main() {
   const cfg = defaultConfig;
   const users = new Users();
-  const app = await createApp(cfg, users);
+  const app = await createApp(true, cfg, users);
 
   await createTestData(users);
 
